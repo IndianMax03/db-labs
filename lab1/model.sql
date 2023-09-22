@@ -56,7 +56,7 @@ create table if not exists space_expeditions (
     start_of_expedition date,
     foreign key (rocket_id) references rockets(id),
     foreign key (destination_planet_id) references planet(id),
-    foreign key (destination_planet_id) references planet(id),
+    foreign key (destination_planet_id) references planet(id)
 );
 
 create table if not exists crew_distributions (
@@ -64,5 +64,5 @@ create table if not exists crew_distributions (
     space_expedition_id integer
     crew_member_id integer,
     foreign key (space_expedition_id) references space_expeditions(id),
-    foreign key (crew_member_id) references crew_members(id),
+    foreign key (crew_member_id) references crew_members(id)
 );
