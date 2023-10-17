@@ -1,68 +1,51 @@
-create table if not exists humans (
+create table if not exists astronauts (
     id serial primary key,
-    name varchar(127) not null,
-    sex varchar(127),
+    name varchar(32) not null,
+    sex varchar(1),
     height real,
-    stress_resistance double precision
+    weight real,
+    stress_resistance smallint,
 );
 
 create table if not exists roles (
     id serial primary key,
-    name varchar(63) not null
-);
-
-create table if not exists crew_members (
-    id serial primary key,
-    human_id integer,
-    role_id integer,
-    space_experiance real,
-    foreign key (human_id) references humans(id)
-);
-
-create table if not exists control_types (
-    id serial primary key,
-    name varchar(31) not null
+    astronaut_id integer references astronauts,
+    name varchar(32),
+    assignment_date timestamp
 );
 
 create table if not exists ais (
-    id serial primary key,
-    name varchar(127) not null,
-    successful_flights integer,
-    unsuccessful_flights integer
+    name varchar(32) primary key,
+    version real
 );
 
 create table if not exists rockets (
     id serial primary key,
-    name varchar(127) not null,
-    control_type_id integer,
-    ai_id integer,
-    foreign key (control_types) references control_types(id),
-    foreign key (ai_id) references ais(id)
+    name varchar(32) not null,
+    has_manual_control boolean,
+    ai_name varchar(32) references ais
 );
 
 create table if not exists planets (
     id serial primary key,
-    name varchar(127) not null,
+    name varchar(64),
     has_atmosphere boolean,
     temperature real
 );
 
 create table if not exists space_expeditions (
     id serial primary key,
-    name varchar(127) not null,
-    rocket_id integer,
-    origin_planet_id integer,
-    destination_planet_id integer,
-    start_of_expedition date,
-    foreign key (rocket_id) references rockets(id),
-    foreign key (destination_planet_id) references planet(id),
-    foreign key (destination_planet_id) references planet(id)
+    name varchar(32) not null,
+    rocket_id integer references rockets,
+    origin_planet_id integer references planets,
+    destination_planet_id integer references planets,
+    start timestamp,
+    end timestamp,
+    is_success boolean
 );
 
-create table if not exists crew_distributions (
-    id serial primary key,
-    space_expedition_id integer
-    crew_member_id integer,
-    foreign key (space_expedition_id) references space_expeditions(id),
-    foreign key (crew_member_id) references crew_members(id)
+create table if not exists expedition_crew (
+    astronaut_id integer references astronauts,
+    space_expedition_id integer references space_expeditions,
+    experience integer
 );
