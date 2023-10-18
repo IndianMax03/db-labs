@@ -13,7 +13,7 @@ create table if not exists astronauts (
 
 create table if not exists roles (
     id serial primary key,
-    astronaut_id integer references astronauts (id),
+    astronaut_id integer references astronauts (id) on delete cascade on update cascade,
     name varchar(32) not null,
     assignment_date timestamp
 );
@@ -29,7 +29,7 @@ create table if not exists rockets (
     id serial primary key,
     name varchar(32) not null,
     has_manual_control boolean,
-    ai_id integer references ais (id)
+    ai_id integer references ais (id) on delete set null on update cascade
 );
 
 create table if not exists planets (
@@ -42,9 +42,9 @@ create table if not exists planets (
 create table if not exists space_expeditions (
     id serial primary key,
     name varchar(32) not null,
-    rocket_id integer references rockets (id),
-    origin_planet_id integer references planets (id),
-    destination_planet_id integer references planets (id),
+    rocket_id integer references rockets (id) on delete set null on update cascade,
+    origin_planet_id integer references planets (id) on delete restrict on update cascade,
+    destination_planet_id integer references planets (id) on delete restrict on update cascade,
     opening timestamp,
     closure timestamp,
     is_success boolean,
@@ -53,8 +53,9 @@ create table if not exists space_expeditions (
 );
 
 create table if not exists expedition_crew (
-    astronaut_id integer references astronauts (id),
-    space_expedition_id integer references space_expeditions (id),
+    astronaut_id integer references astronauts (id) on delete restrict on update cascade,
+    space_expedition_id integer references space_expeditions (id) on delete cascade on update cascade,
     experience integer,
-    constraint valid_experience check (experience >= 0)
+    constraint valid_experience check (experience >= 0),
+    primary key (astronaut_id, space_expedition_id)
 );
