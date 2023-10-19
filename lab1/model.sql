@@ -14,7 +14,7 @@ create table if not exists astronauts (
 create table if not exists roles (
     id serial primary key,
     astronaut_id integer references astronauts (id) on delete cascade on update cascade,
-    name varchar(32) not null,
+    name varchar(128) not null,
     assignment_date timestamp
 );
 
