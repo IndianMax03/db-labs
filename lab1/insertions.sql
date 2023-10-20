@@ -98,8 +98,8 @@ insert into space_expeditions values (12, 'Баба Яга', 5, 3, 7, '2016-05-0
 insert into space_expeditions values (13, 'Танцы с бубном', 3, 6, 9, '2023-05-16 13:11:11', '2027-10-18 06:03:44',  true);
 insert into space_expeditions values (14, 'Последняя дискотека', 8, 10, 2, '2029-09-30 09:07:22', '2034-10-23 12:12:12',  true);
 
---  Состав экспедиции 2, 6, 7, 10 -- командиры, всего 10 человек, астро-экспа-опыт
-insert into expedition_crew values (2, 1, 12);
+--  Состав экспедиции
+insert into expedition_crew values (10, 1, 12);
 insert into expedition_crew values (1, 1, 12);
 insert into expedition_crew values (3, 1, 12);
 insert into expedition_crew values (6, 2, 12);
