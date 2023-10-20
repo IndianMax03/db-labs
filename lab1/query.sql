@@ -67,7 +67,8 @@ join (
         join planets on space_expeditions.destination_planet_id=planets.id
         group by destination_id
     ) destination_join on space_expeditions.destination_planet_id=destination_join.destination_id
-) expeditions on commanders.expedition_id = expeditions.exp_id 
+    where space_expeditions.is_success = true
+) expeditions on commanders.expedition_id = expeditions.exp_id
 order by commanders.astronaut_id;
 
 -- прошлый запрос с полетами только не на Землю
@@ -102,6 +103,7 @@ from (
             join planets on space_expeditions.destination_planet_id=planets.id
             group by destination_id
         ) destination_join on space_expeditions.destination_planet_id=destination_join.destination_id
+        where space_expeditions.is_success = true
     ) expeditions on commanders.expedition_id = expeditions.exp_id 
     order by commanders.astronaut_id
 ) commanders_not_earth
@@ -141,6 +143,7 @@ from (
                 join planets on space_expeditions.destination_planet_id=planets.id
                 group by destination_id
             ) destination_join on space_expeditions.destination_planet_id=destination_join.destination_id
+            where space_expeditions.is_success = true
         ) expeditions on commanders.expedition_id = expeditions.exp_id 
         order by commanders.astronaut_id
     ) commanders_not_earth
@@ -184,6 +187,7 @@ from (
                     join planets on space_expeditions.destination_planet_id=planets.id
                     group by destination_id
                 ) destination_join on space_expeditions.destination_planet_id=destination_join.destination_id
+                where space_expeditions.is_success = true
             ) expeditions on commanders.expedition_id = expeditions.exp_id 
             order by commanders.astronaut_id
         ) commanders_not_earth
@@ -225,6 +229,7 @@ where result.unique_planets = (
                     join planets on space_expeditions.destination_planet_id=planets.id
                     group by destination_id
                 ) destination_join on space_expeditions.destination_planet_id=destination_join.destination_id
+                where space_expeditions.is_success = true
             ) expeditions on commanders.expedition_id = expeditions.exp_id 
             order by commanders.astronaut_id
         ) commanders_not_earth
